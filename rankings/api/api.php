@@ -143,6 +143,17 @@ if (isset($_POST['App'])) {
             "INNER JOIN Countries ON Ranking.country_code = Countries.name_short " .
             "ORDER BY Ranking.subscribers DESC, Ranking.ranked_maps DESC, Ranking.loved_maps DESC, Ranking.id DESC " .
             ") t1, (SELECT @r:=0) t2 LIMIT 2500");
+    } elseif ($_POST['App'] == "Kudosu") {
+        $Rankings = Database::execSimpleSelect("SELECT @r := @r+1 AS rank, t1.* FROM ( " .
+            "SELECT Ranking.country_code AS countrycode, " .
+            "Countries.name_long AS country, " .
+            "Ranking.name AS username, " .
+            "Ranking.kudosu AS kudosu, " .
+            "Ranking.id AS userid " .
+            "FROM Ranking " .
+            "INNER JOIN Countries ON Ranking.country_code = Countries.name_short " .
+            "ORDER BY Ranking.kudosu DESC, Ranking.ranked_maps DESC, Ranking.loved_maps DESC, Ranking.id DESC " .
+            ") t1, (SELECT @r:=0) t2 LIMIT 2500");
     }
     echo json_encode($Rankings);
 

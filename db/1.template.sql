@@ -1825,7 +1825,7 @@ CREATE TABLE `ProfilesVisited` (
 DROP TABLE IF EXISTS `Ranking`;
 CREATE TABLE `Ranking` (
   `id` int(11) NOT NULL,
-  `name` text COLLATE latin1_german1_ci NOT NULL,
+  `name` text NOT NULL,
   `total_pp` int(11) NOT NULL,
   `stdev_pp` int(11) NOT NULL,
   `standard_pp` int(11) NOT NULL,
@@ -1835,7 +1835,7 @@ CREATE TABLE `Ranking` (
   `medal_count` int(11) NOT NULL,
   `rarest_medal` int(11) NOT NULL,
   `rarest_medal_achieved` datetime DEFAULT NULL,
-  `country_code` text COLLATE latin1_german1_ci NOT NULL,
+  `country_code` text NOT NULL,
   `standard_global` int(20) DEFAULT NULL,
   `taiko_global` int(20) DEFAULT NULL,
   `ctb_global` int(20) DEFAULT NULL,
@@ -1843,11 +1843,12 @@ CREATE TABLE `Ranking` (
   `badge_count` int(10) NOT NULL,
   `ranked_maps` int(6) NOT NULL,
   `loved_maps` int(6) NOT NULL,
-  `subscribers` int(20) NOT NULL DEFAULT '0',
+  `subscribers` int(20) NOT NULL DEFAULT 0,
   `followers` int(20) NOT NULL,
   `replays_watched` int(12) NOT NULL,
-  `avatar_url` text COLLATE latin1_german1_ci NOT NULL,
-  `restricted` int(1) NOT NULL DEFAULT '0',
+  `avatar_url` text NOT NULL,
+  `restricted` int(1) NOT NULL DEFAULT 0,
+  `kudosu` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
 

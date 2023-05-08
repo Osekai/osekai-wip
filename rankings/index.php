@@ -43,6 +43,10 @@ if (!isset($_GET['ranking'])) {
         $name = "Osekai Rankings • the top subscribed people!";
         $description = "Who has the most subscribers? it's a cool question, and we have the answer!";
         $tags = "homepage";
+    } else if ($_GET['ranking'] == "Mappers" && $type == "Kudosu") {
+        $name = "Osekai Rankings • kudosu {TEMP}";
+        $description = "{TMP}";
+        $tags = "homepage";
     } else if ($_GET['ranking'] == "Badges" && $type == "Badges") {
         $name = "Osekai Rankings / Badges / Badges • badges";
         $description = "badges";
@@ -210,6 +214,10 @@ $meta = '<meta charset="utf-8">
                     <div class="rankings__home-v2-button" selector="home__button" app="appSubscribers">
                         <h1><?= GetStringRaw("rankings", "general.mappers.title"); ?> / <strong><?= GetStringRaw("rankings", "general.mappers.subscribers"); ?></strong></h1>
                         <p><?= GetStringRaw("rankings", "general.mappers.subscribers.subheader"); ?></p>
+                    </div>
+                    <div class="rankings__home-v2-button" selector="home__button" app="appKudosu">
+                        <h1><?= GetStringRaw("rankings", "general.mappers.title"); ?> / <strong> kudosu</strong></h1>
+                        <p>uwu</p>
                     </div>
                 </div>
                 <div class="rankings__home-v2-header badges-v2">

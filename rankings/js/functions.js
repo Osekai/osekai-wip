@@ -280,6 +280,7 @@ function dbhandler(app) {
                     case "Loved Mapsets": oRanking.appendChild(this.creator.CreateLovedMaps(oRelevantResults[i], oRanking)); break;
                     case "Subscribers": oRanking.appendChild(this.creator.CreateSubscribers(oRelevantResults[i], oRanking)); break;
                     case "Badges": oRanking.appendChild(this.creator.CreateBadges(oRelevantResults[i], oRanking)); break;
+                    case "Kudosu": oRanking.appendChild(this.creator.CreateKudosu(oRelevantResults[i], oRanking)); break;
                 }
                 this.creator.addTopBarEventListeners();
             }
@@ -576,6 +577,31 @@ function elementCreator(dbhandler) {
             let oMainCascade = this.CreateCascade(false, "40vw", oMainUser, oRankCascade);
 
             let oAmount = this.createAmount(oEntry.badges, GetStringRawNonAsync(APP_SHORT, "bar.badges.badges.badges"));
+            let oAmountCascade = this.CreateCascade(false, "auto", oAmount, oMainCascade, true);
+
+            oWrapper.appendChild(oAmountCascade);
+            return oWrapper;
+        }
+    }
+
+    this.CreateKudosu = function (oEntry, oRanking) {
+        if (!oEntry.hasOwnProperty("kudosu")) this.dbhandler.Fail();
+        let oWrapper = this.CreateDefaultWrapper(oRanking.parentNode.parentNode.parentNode.id == "mobile");
+
+        if (oRanking.parentNode.parentNode.parentNode.id == "mobile") {
+            console.log(oEntry);
+            let oTopBar = this.createMobileTopBar(oEntry, this.createMobileCount(oEntry.kudosu, "TMP_kudosu"), false);
+            oWrapper.appendChild(oTopBar);
+            let oMobileWrapper = this.createMobileWrapper(oWrapper);
+            return oMobileWrapper;
+        } else {
+            let oRank = this.CreateRankContent(oEntry);
+            let oRankCascade = this.CreateCascade(true, "60px", oRank);
+
+            let oMainUser = this.CreateMainUsersContent(oEntry);
+            let oMainCascade = this.CreateCascade(false, "40vw", oMainUser, oRankCascade);
+
+            let oAmount = this.createAmount(oEntry.kudosu, "TMP_kudosu");
             let oAmountCascade = this.CreateCascade(false, "auto", oAmount, oMainCascade, true);
 
             oWrapper.appendChild(oAmountCascade);
@@ -1107,6 +1133,7 @@ var appReplays = modeApps.AddChild("Replays", ["Username", "User ID", "Country"]
 var appRanked = mapperApps.AddChild("Ranked Mapsets", ["Username", "User ID", "Country"], "general.mappers.ranked");
 var appLoved = mapperApps.AddChild("Loved Mapsets", ["Username", "User ID", "Country"], "general.mappers.loved");
 var appSubscribers = mapperApps.AddChild("Subscribers", ["Username", "User ID", "Country"], "general.mappers.subscribers");
+var appKudosu = mapperApps.AddChild("Kudosu", ["Username", "User ID", "Country"], "general.mappers.kudosu");
 var appBadges = badgeApps.AddChild("Badges", ["Username", "User ID", "Country"], "general.badges.badges");
 
 
@@ -1114,6 +1141,7 @@ var appBadges = badgeApps.AddChild("Badges", ["Username", "User ID", "Country"],
 bInitialized = false;
 colParentApps.forEach((oParent) => {
     oParent.children.forEach((oChild) => {
+        console.log(oChild.name);
         if (new URLSearchParams(window.location.search).get("type") == oChild.name) {
             oChild.Initialize();
             bInitialized = true;
