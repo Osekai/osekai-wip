@@ -1,6 +1,6 @@
 <?php
 
-class JsonValidatorRule {
+class DataValidatorRule {
     private array $rules;
 
     public function __construct() {
@@ -11,19 +11,19 @@ class JsonValidatorRule {
         array_push($this->rules, [$closure, $rule_code, $details]);
     }
 
-    public function must_be_int(): JsonValidatorRule {
+    public function must_be_int(): DataValidatorRule {
         $this->add_function_rule("MUST_BE_INT", function($v) { return is_int($v); });
 
         return $this;
     }
 
-    public function must_be_string(): JsonValidatorRule {
+    public function must_be_string(): DataValidatorRule {
         $this->add_function_rule("MUST_BE_STRING", function($v) { return is_string($v); });
 
         return $this;
     }
 
-    public function string_must_have_length($minLength, $maxLength): JsonValidatorRule {
+    public function string_must_have_length($minLength, $maxLength): DataValidatorRule {
         $this->add_function_rule(
             "STRING_MUST_HAVE_LENGTH", 
             function($v) use ($minLength, $maxLength) { 
@@ -36,7 +36,7 @@ class JsonValidatorRule {
         return $this;
     }
 
-    public function must_be_defined(): JsonValidatorRule {
+    public function must_be_defined(): DataValidatorRule {
         $this->add_function_rule("MUST_BE_DEFINED", function($v) { 
             return isset($v);
         });
@@ -44,17 +44,17 @@ class JsonValidatorRule {
         return $this;
     }
 
-    public function validate($v): JsonValidationResult {
+    public function validate($v): DataValidationResult {
         foreach ($this->rules as $rule) {
             if (!$rule[0]($v))
-                return new JsonValidationResult(false, $rule[1], $rule[2]);
+                return new DataValidationResult(false, $rule[1], $rule[2]);
         }
 
-        return new JsonValidationResult(true);;
+        return new DataValidationResult(true);;
     }
 }
 
-class JsonValidationResult {
+class DataValidationResult {
     private bool $success;
     private ?string $invalid_rule_code;
     private ?array $invalid_rule_code_details;
@@ -82,8 +82,8 @@ class JsonValidationResult {
     }
 }
 
-class JsonValidator {
-    public static function validate_associative_array(array $array, array $rules): JsonValidationResult {
+class DataValidator {
+    public static function validate_associative_array(array $array, array $rules): DataValidationResult {
         foreach ($rules as $key => $rule) {
             $validationResult = $rule->validate($array[$key]);
             
@@ -91,6 +91,6 @@ class JsonValidator {
                 return $validationResult;
         }
 
-        return new JsonValidationResult(true);
+        return new DataValidationResult(true);
     }
 }

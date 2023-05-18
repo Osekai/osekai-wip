@@ -756,9 +756,9 @@ function osekai_http_request()
     require_once($_SERVER['DOCUMENT_ROOT'] . "/global/php/osekaiHttpRequest.php");
 }
 
-function json_validator() 
+function data_validator()
 {
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/global/php/json_validator.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/global/php/data_validator.php");
 }
 
 function teams_rules() 

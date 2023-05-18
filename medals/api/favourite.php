@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . "/global/php/functions.php");
 
 api_controller_base_classes();
-json_validator();
+data_validator();
 
 class FavouriteMedalApiController extends ApiController
 {
@@ -25,8 +25,8 @@ class FavouriteMedalApiController extends ApiController
 
         $requestJson = JsonBodyReader::read();
         
-        if (!JsonValidator::validate_associative_array($requestJson, [
-            'medal_id' => (new JsonValidatorRule())->must_be_int()
+        if (!DataValidator::validate_associative_array($requestJson, [
+            'medal_id' => (new DataValidatorRule())->must_be_int()
         ])->isSuccess()) {
             return new BadArgumentsApiResult(["message" => "Invalid medal_id"]);
         }
@@ -47,8 +47,8 @@ class FavouriteMedalApiController extends ApiController
 
         $requestJson = JsonBodyReader::read();
         
-        if (!JsonValidator::validate_associative_array($requestJson, [
-            'medal_id' => (new JsonValidatorRule())->must_be_int()
+        if (!DataValidator::validate_associative_array($requestJson, [
+            'medal_id' => (new DataValidatorRule())->must_be_int()
         ])) {
             return new BadArgumentsApiResult(["message" => "Invalid medal_id"]);
         }
