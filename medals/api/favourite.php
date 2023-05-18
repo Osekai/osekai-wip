@@ -27,7 +27,7 @@ class FavouriteMedalApiController extends ApiController
         
         if (!JsonValidator::validate_associative_array($requestJson, [
             'medal_id' => (new JsonValidatorRule())->must_be_int()
-        ])) {
+        ])->isSuccess()) {
             return new BadArgumentsApiResult(["message" => "Invalid medal_id"]);
         }
 

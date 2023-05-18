@@ -760,3 +760,8 @@ function json_validator()
 {
     require_once($_SERVER['DOCUMENT_ROOT'] . "/global/php/json_validator.php");
 }
+
+function teams_rules() 
+{
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/global/php/rules/teams.php");
+}
