@@ -79,7 +79,7 @@ SELECT Medals.medalid AS MedalID
 	, Medals.link AS Link
 	, Medals.description AS Description
 	, Medals.restriction AS Restriction
-	, Medals.grouping AS Grouping
+	, Medals.grouping AS `Grouping`
 	, Medals.instructions AS Instructions
 	, Solutions.solution AS Solution
 	, Solutions.mods AS Mods
@@ -320,6 +320,7 @@ CREATE TABLE `Comments` (
   `Reported` int(5) DEFAULT 0,
   `ParentComment` int(10) DEFAULT NULL,
   `ParentCommenter` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `Pinned` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `ParentComment` (`ParentComment`),
   CONSTRAINT `Comments_ibfk_1` FOREIGN KEY (`ParentComment`) REFERENCES `Comments` (`ID`) ON DELETE CASCADE
