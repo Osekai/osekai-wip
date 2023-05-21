@@ -2,6 +2,10 @@ Options +FollowSymlinks
 
 RewriteEngine On
 
+# ! < TEAMS API > ! #
+RewriteRule ^api/v1/(teams\/.*|teams)$ /api/internal/v1/teams/router.php [L,NC]
+# ! </ TEAMS API > ! #
+
 RewriteBase /
 
 
