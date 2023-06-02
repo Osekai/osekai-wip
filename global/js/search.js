@@ -33,7 +33,27 @@ search_input.addEventListener("focus", function () {
         search_initOverlay();
     }
 })
-search_input.addEventListener("keydown", search_startSearch);
+search_input.addEventListener("keydown", function(e) {
+    var k = e.which;
+    // surely there's a better way to do this... https://stackoverflow.com/questions/7770561/reject-control-keys-on-keydown-event
+    if (k == 20 /* Caps lock */
+     || k == 16 /* Shift */
+     || k == 9 /* Tab */
+     || k == 27 /* Escape Key */
+     || k == 17 /* Control Key */
+     || k == 91 /* Windows Command Key */
+     || k == 19 /* Pause Break */
+     || k == 18 /* Alt Key */
+     || k == 93 /* Right Click Point Key */
+     || ( k >= 35 && k <= 40 ) /* Home, End, Arrow Keys */
+     || k == 45 /* Insert Key */
+     || ( k >= 33 && k <= 34 ) /*Page Down, Page Up */
+     || (k >= 112 && k <= 123) /* F1 - F12 */
+     || (k >= 144 && k <= 145 )) { /* Num Lock, Scroll Lock */
+        return false;
+    }
+    search_startSearch();
+});
 document.addEventListener("click", function (e) {
     loaderopened = false;
     if (!e.target.classList.contains("osekai__navbar-search") && (e.target.closest(".osekai__navbar-search") == null)) {
