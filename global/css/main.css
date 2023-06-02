@@ -4750,3 +4750,66 @@ input[type='range']:focus::-ms-fill-upper {
 .osekai__dropdown-item i {
     margin-right: 5px;
 }
+
+.osekai__navbar-search {
+    height: 45px;
+    width: 358px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(hsl(var(--accentdark_hue), var(--accentdark_saturation), calc(18% * var(--accentdark_valueoffset))), hsl(var(--accentdark_hue), var(--accentdark_saturation), calc(15% * var(--accentdark_valueoffset))));
+    border-radius: 8px;
+    position: relative;
+}
+
+.osekai__navbar-search>i {
+    margin-left: 8px;
+}
+.osekai__navbar-search>input {
+    padding-left: 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0px solid transparent;
+    background-color: transparent;
+    font-family: inherit;
+    color: inherit;
+    outline: 0px solid transparent !important;
+}
+
+.osekai__navbar-search-overlay {
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    width: 100%;
+    background: linear-gradient(hsl(var(--accentdark_hue), var(--accentdark_saturation), calc(18% * var(--accentdark_valueoffset))), hsl(var(--accentdark_hue), var(--accentdark_saturation), calc(15% * var(--accentdark_valueoffset))));
+}
+
+.osekai__navbar-search-overlay-hidden {
+    top: 45px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.osekai__navbar-search-overlay-apps, .osekai__navbar-search-overlay-inner {
+    padding: 11px 15px;
+}
+.osekai__navbar-search-overlay-inner {
+    border-radius: 8px;
+    background: linear-gradient(hsl(var(--accentdark_hue), var(--accentdark_saturation), calc(28% * var(--accentdark_valueoffset))), hsl(var(--accentdark_hue), var(--accentdark_saturation), calc(25% * var(--accentdark_valueoffset))));
+
+}
+
+
+.osekai__navbar-search-overlay-apps i {
+    opacity: 0.4;
+    margin-right: 15px;
+    font-size: 24px;
+}
+.osekai__navbar-search-overlay-apps .active {
+    opacity: 1;
+}
