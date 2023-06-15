@@ -98,6 +98,14 @@ var parserTags = {
 			return '</q>';
 		}
 	},
+	'blockquote': {
+		openTag: function(params, content) {
+			return '<blockquote>';
+		},
+		closeTag: function(params, content) {
+			return '</blockquote>';
+		}
+	},
 	's': {
 		openTag: function(params,content) {
 			return '<s>';

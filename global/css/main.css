@@ -4719,3 +4719,25 @@ input[type='range']:focus::-ms-fill-upper {
 .osekai__3col_col1{
     overflow: scroll;
 }
+
+code {
+    background-color: rgba(var(--genericaccent),0.5);
+    padding: 0 5px;
+    text-wrap: nowrap;    
+}
+
+blockquote {
+    display: flex;
+    background-color: rgba(var(--genericaccent), 0.5);
+    border-radius: 6px;
+    padding: 5px 0;
+}
+
+blockquote::before {
+    content: "";
+    border-left: 7px solid rgb(var(--accent));
+    margin-right: 4px;
+    border-radius: 6px;
+    margin: -5px 5px;
+    margin-left: 0;
+}
