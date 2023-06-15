@@ -382,8 +382,8 @@ async function loadMedal(strMedalName, updateAdminPanel = true) {
     for (let i = 0; i < document.querySelectorAll("[selector='oMedalIcon']").length; i++) {
         document.querySelectorAll("[selector='oMedalIcon']")[i].src = colMedals[strMedalName].Link;
     }
-    document.getElementById("strMedalSolution").innerHTML = colMedals[strMedalName].Solution;
-    document.getElementById("strMedalSolution").innerHTML = document.getElementById("strMedalSolution").innerHTML.replace(/\n/g, "<br />")
+    document.getElementById("strMedalSolution").innerHTML = BBCodeParser.process(colMedals[strMedalName].Solution);
+    document.getElementById("strMedalSolution").innerHTML = document.getElementById("strMedalSolution").innerHTML.replace(/\n/g, "<br />");
     var rarity = parseFloat(colMedals[strMedalName].Rarity);
     //console.log(rarity);
     document.getElementById("strMedalRarity").innerHTML = "<light>rarity</light> " + Math.round(rarity * 100) / 100 + "%";
