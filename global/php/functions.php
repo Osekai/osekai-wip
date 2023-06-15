@@ -360,8 +360,10 @@ function fontawesome()
 {
     // guess what this one does
 
-    echo '<script rel="preload" src="https://kit.fontawesome.com/91ad005f46.js" crossorigin="anonymous"></script>';
-    echo '<link rel="stylesheet" href="/global/fonts/osekai-icon-font/style.css?v=' . OSEKAI_VERSION . '">';
+    //echo '<script rel="preload" src="https://kit.fontawesome.com/91ad005f46.js" crossorigin="anonymous"></script>';
+echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" integrity="sha512-rqQltXRuHxtPWhktpAZxLHUVJ3Eombn3hvk9PHjV/N5DMUYnzKPC1i3ub0mEXgFzsaZNeJcoE0YHq0j/GFsdGg==" crossorigin="anonymous" referrerpolicy="no-referrer" />';
+//echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/js/all.min.js" integrity="sha512-MNA4ve9aW825/nbJKWOW0eo0S5f2HWQYQEIw4TkgLYMgqk88gHpSHJuMkJhYMQWKE7LmJMBdJZMs5Ua19QbF8Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>';    
+echo '<link rel="stylesheet" href="/global/fonts/osekai-icon-font/style.css?v=' . OSEKAI_VERSION . '">';
 }
 
 function lottie()
@@ -759,4 +761,9 @@ function osekai_http_request()
 function json_validator() 
 {
     require_once($_SERVER['DOCUMENT_ROOT'] . "/global/php/json_validator.php");
+}
+
+function search_service() 
+{
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/global/php/services/search_service.php");
 }

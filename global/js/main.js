@@ -325,43 +325,64 @@ function closeLoader() {
     }
 }
 
-window.openDialog = function (title, header, message, button1, b1Callback, button2 = "", b2Callback = function () { }) {
-    html = `<div class="osekai__overlay"><section class="osekai__panel osekai__overlay__panel">
-    <div class="osekai__panel-header">
-        <p>` + title + `</p>
-    </div>
-    <div class="osekai__panel-inner">
-        <p class="osekai__popup-ifo1">` + header + `</p>
-        <p class="osekai__popup-ifo2">` + message + `</p>
-        <div class="osekai__flex_row">
-            <a id="glb_tmp_cancel" class="osekai__button">Cancel</a>
-            <div class=" osekai__left osekai__center-flex-row">
-                <a id="glb_tmp_button1" class=" osekai__button">` + button1 + `</a>`;
+window.openDialog = function (title, header, message, buttons = [], content = null) {
+    var modal_overlay = Object.assign(document.createElement("div"), { className: "osekai__modal-overlay osekai__modal-overlay-bland osekai__modal-overlay--hidden" });
+    var modal_overlay_close_layer = Object.assign(document.createElement("div"), {className: "osekai__modal-overlay-closelayer"});
+    modal_overlay.appendChild(modal_overlay_close_layer);
+    
+    var modal_overlay_panel = Object.assign(document.createElement("div"), { className: "osekai__modal-overlay-panel" });
+    var modal_overlay_panel_top = Object.assign(document.createElement("div"), { className: "osekai__modal-overlay-panel-top" });
+    var modal_overlay_panel_bottom = Object.assign(document.createElement("div"), { className: "osekai__modal-overlay-panel-bottom" });
 
-    if (button2 != "") {
-        html += `<a id="glb_tmp_button2" class="osekai__button">` + button2 + `</a>`;
+    modal_overlay_panel.appendChild(modal_overlay_panel_top);
+    modal_overlay_panel.appendChild(modal_overlay_panel_bottom);
+
+    var title = Object.assign(document.createElement("h1"), { innerText: title });
+    var sub = Object.assign(document.createElement("h3"), { innerText: header });
+    var message = Object.assign(document.createElement("p"), { innerText: message });
+
+    modal_overlay_panel_bottom.appendChild(title);
+    modal_overlay_panel_bottom.appendChild(sub);
+    modal_overlay_panel_bottom.appendChild(message);
+
+    function close() {
+        modal_overlay.remove();
     }
 
-    html += `</div>
-            </div>
-        </div>
-    </section></div>`;
+    modal_overlay_close_layer.addEventListener("click", function() {close()});
 
-    document.getElementById("other_overlays").innerHTML += html;
+    if (content != null)
+        modal_overlay_panel_bottom.appendChild(content);
 
-    document.getElementById("glb_tmp_button1").onmousedown = function () {
-        document.getElementById("other_overlays").innerHTML = "";
-        b1Callback();
-    }
-    if (button2 != "") {
-        document.getElementById("glb_tmp_button2").onmousedown = function () {
-            document.getElementById("other_overlays").innerHTML = "";
-            b2Callback();
+    var button_container = Object.assign(document.createElement("div"), { className: "osekai__modal-overlay-buttons" });
+
+    for (let button of buttons) {
+        let buttonEl = document.createElement("div");
+        buttonEl.className = "osekai__button";
+        if (button.highlighted == true) {
+            buttonEl.classList.add("osekai__button-highlighted");
         }
+        buttonEl.innerHTML = button.text;
+        buttonEl.addEventListener("click", button.callback);
+        buttonEl.addEventListener("click", close);
+
+        button_container.appendChild(buttonEl);
     }
-    document.getElementById("glb_tmp_cancel").onmousedown = function () {
-        document.getElementById("other_overlays").innerHTML = "";
-    }
+
+    modal_overlay_panel_bottom.appendChild(button_container);
+
+    modal_overlay_panel.appendChild(modal_overlay_panel_top);
+    modal_overlay_panel.appendChild(modal_overlay_panel_bottom);
+
+    modal_overlay.appendChild(modal_overlay_panel);
+
+    console.log("appending...?");
+
+    document.body.appendChild(modal_overlay);
+    setTimeout(function () {
+        // need this so it plays the animation... UGHHHH
+        modal_overlay.classList.remove("osekai__modal-overlay--hidden");
+    }, 100);
 }
 
 //countries
@@ -703,38 +724,48 @@ function getAlerts() {
     };
 
 }
+
+
 document.addEventListener("DOMContentLoaded", function () {
     getAlerts();
 
     var oTabContainers = document.querySelectorAll("[otab-container]");
-    for(let oTabContainer of oTabContainers) {
+    for (let oTabContainer of oTabContainers) {
+
         let oTabs = oTabContainer.querySelectorAll("[otab-name]")
-        for (let oTab of oTabs) {
-            if (oTab.getAttribute("otab-default") == "") {
-                oTab.classList.remove("osekai__otab-hidden");
-                oTabContainer.querySelector("[otab-button=\""+oTab.getAttribute("otab-name")+"\"]").classList.add("osekai__otab-button-active")
+        var oTabButtons = oTabContainer.querySelectorAll("[otab-button]")
+        function switchTab(tabName) {
+            for (var tab of oTabs) {
+                if (tab.getAttribute("otab-name") == tabName) {
+                    tab.classList.remove("osekai__otab-hidden");
+                    if (tab.getAttribute("otab-callback")) {
+                        console.log(tab.getAttribute("otab-callback"));
+                        window[tab.getAttribute("otab-callback")]();
+                    }
+                } else {
+                    tab.classList.add("osekai__otab-hidden");
+                }
+            }
+
+            for (let button of oTabButtons) {
+                if (button.getAttribute("otab-button") == tabName) {
+                    button.classList.add("osekai__otab-button-active");
+                } else {
+                    button.classList.remove("osekai__otab-button-active");
+                }
             }
         }
 
-        var oTabButtons = oTabContainer.querySelectorAll("[otab-button]")
+        for (let oTab of oTabs) {
+            if (oTab.getAttribute("otab-default") == "") {
+                switchTab(oTab.getAttribute("otab-name"));
+            }
+        }
+
         for (let oTabButton of oTabButtons) {
             oTabButton.innerHTML = oTabButton.getAttribute("otab-button");
-            oTabButton.addEventListener("click", function() {
-                for (let oTab of oTabs) {
-                    console.log(oTab);
-                    console.log(oTabButton);
-                    if (oTab.getAttribute("otab-name") == oTabButton.getAttribute("otab-button")) {
-                        oTab.classList.remove("osekai__otab-hidden");
-                    } else {
-                        oTab.classList.add("osekai__otab-hidden");
-                    }
-                }
-
-                for (let oTabButton2 of oTabButtons) {
-                    oTabButton2.classList.remove("osekai__otab-button-active");
-                }
-                
-                oTabButton.classList.add("osekai__otab-button-active");
+            oTabButton.addEventListener("click", function () {
+                switchTab(oTabButton.getAttribute("otab-button"));
             });
         }
     }
