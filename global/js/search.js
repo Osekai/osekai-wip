@@ -127,8 +127,8 @@ function search_doSearch() {
     loaderopened = false;
     var search_query = search_input.value;
     var data = new FormData();
-    data.append("strType", search_cur_app);
-    data.append("strSearch", search_query);
+    data.append("type", search_cur_app);
+    data.append("query", search_query);
     var xhr = new XMLHttpRequest();
 
     xhr.open("POST", "/global/api/search.php", true);
