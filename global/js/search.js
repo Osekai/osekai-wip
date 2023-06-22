@@ -134,6 +134,7 @@ function search_doSearch() {
     xhr.open("POST", "/global/api/search.php", true);
     xhr.onload = function () {
         var response = JSON.parse(xhr.response);
+        console.log(response);
         // NOTE: waiting for api :D
     }
     xhr.send(data);
