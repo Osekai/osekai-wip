@@ -135,7 +135,6 @@ function search_doSearch() {
     xhr.onload = function () {
         var response = JSON.parse(xhr.response);
         console.log(response);
-        // NOTE: waiting for api :D
     }
     xhr.send(data);
 
